@@ -1,0 +1,6 @@
+trigger AccountTaskTrigger on Account (after insert) {
+    if(Trigger.IsInsert && Trigger.isAfter) {
+        AccountTaskClass.CreateTask(Trigger.new);
+    }
+
+}
