@@ -1,0 +1,22 @@
+public class TaskAccountClass {
+    public static void completeTask(List<Task> oldTasks, List<Task> newTasks){
+        
+        List<Account> accountsToUpdate = new List<Account>();
+        
+              for(Integer i = 0; i < newTasks.size(); i++) {
+            if(newTasks[i].Status == 'Completed' && oldTasks[i].Status != 'Completed') {
+                Account acc = new Account(Id = newTasks[i].WhatId, 
+                                          isActive__c = true, 
+                                          Description = newTasks[i].Description);
+                accountsToUpdate.add(acc);
+            }
+        }
+
+        if(!accountsToUpdate.isEmpty()) {
+            update accountsToUpdate;
+        }
+        
+        
+    }
+
+}
