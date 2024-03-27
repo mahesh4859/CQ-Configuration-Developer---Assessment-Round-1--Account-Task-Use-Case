@@ -1,0 +1,6 @@
+trigger TaskAccountTrigger on Task (after update) {
+    if(trigger.isAfter && Trigger.isUpdate){
+        TaskAccountClass.completeTask(Trigger.old, Trigger.new) ;
+    }
+
+}
