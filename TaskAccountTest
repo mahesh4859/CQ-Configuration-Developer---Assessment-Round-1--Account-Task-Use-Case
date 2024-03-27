@@ -1,0 +1,32 @@
+@isTest
+public class TaskAccountTest {
+    @isTest 
+    public static void testCompleteTask(){
+        Account testAccount = new Account(Name = 'Test Account',
+                                          AccountNumber= '1234',
+                                         Created_Date__c = system.today());
+        insert testAccount ;
+        
+        // Create a new Task related to the Account
+        Task testTask = new Task(WhatId = testAccount.Id, 
+                                 Status = 'Not Started', 
+                                 Description = 'Test Description');
+        insert testTask;
+        
+         // Update the Task's status to 'Completed'
+        testTask.Status = 'Completed';
+        update testTask;
+        
+         // Call the method to complete the Task
+        TaskAccountClass.completeTask(new List<Task>{testTask}, new List<Task>{testTask});
+        
+        // Query for the Account
+        Account updatedAcc = [SELECT isActive__c, Description FROM Account WHERE Id = :testAccount.Id];
+
+ // Assert that the Account's isActive__c field is true and the Description field is updated
+        System.assertEquals(true, updatedAcc.isActive__c, 'The Account should be active');
+        System.assertEquals(testTask.Description, updatedAcc.Description, 'The Account Description should be updated');
+        
+    }
+
+}
